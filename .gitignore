@@ -1,0 +1,26 @@
+# Virtual env
+renv/library/
+renv/staging/
+renv/python/
+renv/local/
+renv/cellar/
+renv/lock/
+renv/sandbox/
+renv/staging/
+
+# Image data
+*.tif
+*.tif.aux.xml
+
+# Road data
+*.cpg
+*.dbf
+*.prj
+*.shp
+*.shx
+
+# RData and temp files (intermediate outputs)
+*.txt
+*.Rhistory
+*.RData
+*.Rproj.user/
