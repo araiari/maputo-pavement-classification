@@ -1,8 +1,8 @@
-# Qui ci sono tutte le funzioni per calcolare il MER
-# Le funzioni ROC_curve calcolano il MER per soglia stretta variabile da 0 a 1
-# e la plottano.
-# La funzione MER_uncertain_interval permette un intervallo di frequenza [i,j] in cui la
-# predizione ? dubbia. Restituisce il MER e la % di incertezza (entrambe matrici)
+# Here are all the functions to calculate the MER
+# The ROC_curve functions calculate the MER for narrow threshold varying from 0 to 1
+# and they plot it.
+# The MER_uncertain_interval function allows a frequency range [i,j] in which the
+# prediction is doubtful. Returns the MER and % uncertainty (both matrices)
 
 
 # ROC curve --------------------------------------------------------------------
@@ -23,7 +23,7 @@ knn_ROC_curve = function (k_neig_chosen, true_class_test, pred_prob,
     class_pred_ROC = character(n_test)
     class_pred_ROC[pred_prob>=p] = class_cat[1]; class_pred_ROC[pred_prob<p] = class_cat[2]
     
-    true_class_test2 = true_class_test #se ci sono pi? classi devo sistemarle...
+    true_class_test2 = true_class_test #if multiple classes, we must fix...
     true_class_test2[which(true_class_test2!=class_cat[1])] = class_cat[2]
     
     true_class_test2 = as.factor(true_class_test2); levels(true_class_test2) = class_cat
@@ -35,7 +35,7 @@ knn_ROC_curve = function (k_neig_chosen, true_class_test, pred_prob,
     print(cm_ROC)
     print(paste('MER=', round(1-sum(diag(cm_ROC))/sum(cm_ROC), digits=3)))
     
-    TPR = c(TPR, cm_ROC[1,1]/sum(cm_ROC[1,])) # TP/(TP+FN)=TP/(TP+asfalti predetti unpaved)
+    TPR = c(TPR, cm_ROC[1,1]/sum(cm_ROC[1,])) # TP/(TP+FN)=TP/(TP+paved that are misclassified as unpaved)
     FPR = c(FPR, cm_ROC[2,1]/sum(cm_ROC[2,])) # FP/(FP+TN)
   }
   rm(class_pred_ROC, cm_ROC, p, p_range)
@@ -110,7 +110,7 @@ knn_MER_uncertain_interval = function(k, true_test_class, pred_prob)
       n_uu = length(which(class_pred=="u" & true_test_class=="u"))
       
       MER[k*i+1, k*j+1] =  (n_au[k*i+1, k*j+1]+n_ua[k*i+1, k*j+1])/n_test
-      TPR[k*i+1, k*j+1] = n_aa/(n_aa+n_au[k*i+1, k*j+1]) # TP/(TP+FN)=TP/(TP+asfalti predetti unpaved)
+      TPR[k*i+1, k*j+1] = n_aa/(n_aa+n_au[k*i+1, k*j+1]) # TP/(TP+FN)=TP/(TP+paved that are misclassified as unpaved)
       FPR[k*i+1, k*j+1] = 1 - n_uu/(n_uu+n_ua[k*i+1, k*j+1]) # FP/(FP+TN)
       
     }

@@ -1,47 +1,48 @@
 ######################## KNN function ##################################
 
-# Prende in ingresso una matrice distanza tra i punti del test (righe) e i punti
-# del training (colonne): d è una matrice N_test*N_train
+# It takes as input a distance matrix between the test points (rows) and the points
+# of training (columns): d is an N_test*N_train matrix
 # 
-# Per ogni elemento del test, vengono trovati i k_neig punti più vicini del training.
+# For each test item, the k_nig closest points of the training are found.
 # 
-# Viene assegnata ad esso la classe più frequente (nella versione standard, alfa=0.5).
-# Può essere scelta una soglia di classificazione tramite il parametro alpha.
+# The most frequent class is assigned to it (in the standard version, alpha=0.5).
+# A classification threshold can be chosen via the alpha parameter.
 #
-# La funzione funziona anche per classi multiple: basta dare in input i fattori della classe
-# e il vettore di soglie alfa.
+# The function also works for multiple classes: just input the class factors
+# and the alpha threshold vector.
 # 
-# Deve essere passato il vettore train_class_labels per poter predire la classe.
-# Se si vuole che venga calcolato il MER, si può passare anche la test_class_labels.
+# The train_class_labels vector must have been passed in order to predict the class.
+# If you want the MER to be calculated, you can also pass the test_class_labels.
+
 
 knn_distanza = function(d, k_neig, alpha=NULL, train_class_labels, test_class_labels=NULL,
                         class_cat=NULL ){
   
   d = as.matrix(d)
   
-      # inizializzo indici massimi
+      # Initialize the indices
   N_train = length(train_class_labels)
   N_test = dim(d)[1]
   N = N_train+N_test
   
-      # controllo errore dimensione
+      # Check dimensionality errors
   if (N_train != dim(d)[2]){
     print("Error: distance matrix dimension do not correspond!")
     return (1)
   }
   
-      # se non indicati, inizializzo class_cathegory e vettore delle soglie alpha
+      # if not indicated, initialize class_category and alpha threshold vector
   if (is.null(class_cat)) class_cat = levels(as.factor(train_class_labels))
   n_class = length(class_cat)
   if (is.null(alpha))     alpha = rep(1/n_class, n_class)
   
-      # inizializzo contatori, frequenze e classi predette
+      # Initialize the aforementioned counters, frequencies and classes
   f_counter = numeric(n_class)
   
   freq = matrix(0, ncol=n_class, nrow=N_test)
   pred_class_labels = character(N_test)
   
-      # ciclo for su tutti gli elementi del test set
+      # for loop on all test set items
   for (v in 1:N_test){
     
     which_neig = order(d[v,])[1:k_neig]   # 

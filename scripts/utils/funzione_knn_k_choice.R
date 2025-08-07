@@ -1,12 +1,12 @@
-# La funzione calcola il MER del knn con soglia 0.5 utilizzando diversi valori di k.
-# Tali valori sono specificati nel parametro k_neig.
-# Il MER viene calcolato come media dei MER valutati per diversi test sets con 
-# k_fold cross validation (il numero di folds � nel parametro k_fold)
-# la funzione prende in ingresso la matrice distanza tra tutti i punti (d)
+# The function calculates the MER of the knn with threshold 0.5 using different k values.
+# These values are specified in the k_neig parameter.
+# The MER is calculated as the average of the MERs evaluated for different test sets with 
+# k_fold cross validation (the number of folds is in the k_fold parameter)
+# the function takes as input the distance matrix between all points (d)
 
-# Nel caso in cui le classi siano pi� di una, la funzione da utilizzare non � 
-# knn_distanza ma � knn_distanza_multiclass.
-# Assegna la classe a frequenza massima.
+# If there are more classes than one, the function to use
+# knn_distance but knn_distance_multiclass.
+# Assign class to maximum frequency.
 
 source('scripts/utils/funzione_knn_distanza.R')
 
@@ -15,14 +15,14 @@ knn_k_choice = function(dd, k_neig=1:50, alpha=NULL, k_fold=10, plot=F, true_cla
   class_cat = levels(as.factor(true_class_train))
   start_time = Sys.time()
   
-  # inizializzo gli indici dei validation sets:
+  # I initialize the indexes of the validation sets:
   n_train = dim(dd)[1]
     n_valid = rep(floor(n_train/k_fold), k_fold)
   if (n_train%%k_fold!=0)
     n_valid[1:(n_train%%k_fold)] = n_valid[1:(n_train%%k_fold)] + 1;
   n_valid_index = cumsum(c(1, n_valid))
   
-  # calcolo il MER con un ciclo for per ogni valore in k_neig:
+  # I calculate the MER with a for loop for each value in k_neig:
   MER = rep(0, length(k_neig))
   
   for (j in 1:length(k_neig)) {
@@ -58,7 +58,7 @@ knn_k_choice = function(dd, k_neig=1:50, alpha=NULL, k_fold=10, plot=F, true_cla
 knn_k_choice_plot = function(k_neig, MER, title="MER for different k values",
                              k_chosen=NULL, MER_test=NULL) 
 {
-  windows(bg="#FAFAFA")
+  x11(bg="#FAFAFA")
   plot(k_neig, MER, type="l", xlab="k values", ylim=c(min(c(MER_test,MER)), max(c(MER_test,MER))))
   points(k_neig, MER, pch=20)
   grid()

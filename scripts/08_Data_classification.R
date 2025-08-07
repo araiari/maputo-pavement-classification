@@ -65,7 +65,7 @@ for (black in black_list) {
 # Configuration parameters for road pixel extraction
 prefix = "data/raster"                                    # Path to image directory
 final_file = "preprocessed-data/val_tot_unknown_"         # Base filename for output
-approach = "strict"                                       # DBSCAN method: "strict" or "permissive"
+approach = "permissive"                                       # DBSCAN method: "strict" or "permissive"
 lim_threshold = 90                                        # Vegetation removal threshold
 
 # Batch processing: Process images in batches to manage memory usage

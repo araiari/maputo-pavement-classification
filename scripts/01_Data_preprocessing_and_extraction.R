@@ -84,7 +84,7 @@ prefix = "data/raster"
 val_tot = NULL                  # Initialize tot cloud results
 val_med = NULL                  # Initialize median results
 
-approach = "strict"             # Choose between strict and permissive
+approach = "permissive"             # Choose between strict and permissive
 lim_threshold = 90
 
 for (name in known_names) {
