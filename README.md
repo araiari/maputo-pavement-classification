@@ -28,8 +28,11 @@ maputo-road-classification/
 ├── data/             # Input data (NOT included)
 │   ├── raster/
 │   └── shapefile/
-├── processed-data/   # Intermediate output (NOT included)
-│   ├── cpp-elaboration/
+├── preprocessed-data/   # Intermediate output (NOT included)
+│   └── cpp-elaboration/
+├── output/           # Results of the pavement classification 
+│   ├── k-nn_only_images
+│   └── k-nn_images_and_type
 ├── scripts/          # All R scripts used in the analysis
 │   ├── utils/        # Utility functions
 │   ├── .R
@@ -44,8 +47,6 @@ maputo-road-classification/
 ### Software Dependencies
 ```r
 R >= 4.0.5
-RStudio >= 1.4.1106
-QGIS >= 3.16.3
 ```
 
 ## How to run
@@ -71,11 +72,10 @@ If you use this code in your research, please cite:
 
 ```bibtex
 @misc{burzacchi2025maputo,
-  author       = {Andrea Burzacchi},
-  title        = {maputo-road-classidication},
+  author       = {Burzacchi, Arianna and Vantini, Simone},
+  title        = {maputo-road-classification: code reference for the paper "Monitoring road infrastructure from satellite images in Greater Maputo"},
   year         = {2025},
   howpublished = {\url{https://github.com/araiari/maputo-road-classidication}},
-  note         = {Reference paper: Monitoring road infrastructure from satellite images in Greater Maputo},
   url          = {\url{https://github.com/araiari/maputo-road-classidication}}
 }
 ```
